@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "16885716591",
+    "project_id": "com-cmelgar-reminder5",
+    "storage_bucket": "com-cmelgar-reminder5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16885716591:android:0a68c032f726c9a3469f9a",
+        "android_client_info": {
+          "package_name": "com.udacity.project4"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "16885716591-piluabqhl8md2qdd9b02bspdblmgiikn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.udacity.project4",
+            "certificate_hash": "6feee4e7d9ee0c56c03e83c151cd35a8ed0fb718"
+          }
+        },
+        {
+          "client_id": "16885716591-lhuifg2kc9oid9t7i0ce35pqsmhpnird.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0hPtzIWzFhdgUIhrmMryY00cUyyj8yEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "16885716591-lhuifg2kc9oid9t7i0ce35pqsmhpnird.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
