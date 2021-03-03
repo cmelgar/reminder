@@ -1,12 +1,15 @@
 package com.udacity.project4.locationreminders.geofence
 
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
 import com.udacity.project4.R
+import com.udacity.project4.locationreminders.savereminder.SaveReminderFragment.Companion.ACTION_GEOFENCE_EVENT
 
 /**
  * Triggered by the Geofence.  Since we can have many Geofences at once, we pull the request
@@ -21,11 +24,15 @@ import com.udacity.project4.R
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
 
+        if (intent.action == ACTION_GEOFENCE_EVENT) {
+            GeofenceTransitionsJobIntentService.enqueueWork(context, intent)
+        }
 //        if (intent.action == ACTION_GEOFENCE_EVENT) {
 //            val geofencingEvent = GeofencingEvent.fromIntent(intent)
 //
 //            if(geofencingEvent.hasError()) {
 //                val errorMessage = errorMessage(context, geofencingEvent.errorCode)
+//                Log.e(TAG, errorMessage)
 //                return
 //            }
 //
@@ -41,11 +48,26 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
 //                    }
 //                }
 //
-//                val foundIndex = GeofencingConstants
+//                val foundIndex = GeofencingConstants.LANDMARK_DATA.indexOfFirst {
+//                    it.id == fenceId
+//                }
+//
+//                if (-1 == foundIndex) {
+//                    Log.e(TAG, "Unknown Geofence: Abort Mission")
+//                    return
+//                }
+//
+//                val notificationManager = ContextCompat.getSystemService(
+//                        context,
+//                        NotificationManager::class.java
+//                ) as NotificationManager
+//
+//                notificationManager.sendGeofenceEnteredNotification(
+//                        context, foundIndex
+//                )
 //            }
 //        }
 
     }
 }
 
-private const val TAG = "GeofenceReceiver"

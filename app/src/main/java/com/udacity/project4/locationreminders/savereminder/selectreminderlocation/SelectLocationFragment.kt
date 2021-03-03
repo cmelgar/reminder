@@ -71,8 +71,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             _viewModel.showToast.value = "You need to select a point of interest"
         }
 
-        val navController = findNavController()
-        navController.navigate(R.id.saveReminderFragment)
+        _viewModel.navigationCommand.value = NavigationCommand.Back
     }
 
 
@@ -81,7 +80,6 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        // TODO: Change the map type based on the user's selection.
 
         R.id.normal_map -> {
             map.mapType = GoogleMap.MAP_TYPE_NORMAL
@@ -108,18 +106,10 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         val latitude = -12.156796
         val longitude = -76.971353
         val zoomLevel = 18f
-        val overlaySize = 100f
 
         val homeLatLng = LatLng(latitude, longitude)
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(homeLatLng, zoomLevel))
-        map.addMarker(MarkerOptions().position(homeLatLng))
-//
-//        val androidOverlay = GroundOverlayOptions()
-//                .image(BitmapDescriptorFactory.fromResource(R.drawable.common_full_open_on_phone))
-//                .position(homeLatLng, overlaySize)
-//
-//        map.addGroundOverlay(androidOverlay)
-//        setMapLongClick(map)
+
         setPoiClick(map)
         setMapStyle(map)
         enableMyLocation()
@@ -127,25 +117,6 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         Log.i("SelectLocationFragment","Map initialized")
 
     }
-
-//    private fun setMapLongClick(map: GoogleMap) {
-//        map.setOnMapLongClickListener { latLng ->
-//            val snippet = String.format(
-//                    Locale.getDefault(),
-//                    "Lat: %1$.5f, Long: %2$.5f",
-//                    latLng.latitude,
-//                    latLng.longitude
-//            )
-//
-//            map.addMarker(
-//                    MarkerOptions()
-//                            .position(latLng)
-//                            .title(getString(R.string.dropped_pin))
-//                            .snippet(snippet)
-//                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-//            )
-//        }
-//    }
 
     private fun setPoiClick(map: GoogleMap) {
         map.setOnPoiClickListener { poi ->

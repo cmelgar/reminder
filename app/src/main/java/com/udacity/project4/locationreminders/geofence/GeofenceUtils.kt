@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.android.gms.location.GeofenceStatusCodes
 import com.google.android.gms.maps.model.LatLng
 import com.udacity.project4.R
+import java.util.concurrent.TimeUnit
 
 fun errorMessage(context: Context, errorCode: Int): String {
     val resources = context.resources
@@ -18,9 +19,11 @@ fun errorMessage(context: Context, errorCode: Int): String {
 data class LandmarkDataObject(val id: String, val name: Int, val latlng: LatLng)
 
 internal object GeofencingConstants {
-    val LANDMARK_DATA:Array<LandmarkDataObject> = arrayOf()
+//    val LANDMARK_DATA:Array<LandmarkDataObject> = arrayOf()
 
-    val NUM_LANDMARKS = LANDMARK_DATA.size
-    const val GEOFENCE_RADIUS_IN_METERS = 100f
+    val GEOFENCE_EXPIRATION_IN_MILLISECONDS: Long = TimeUnit.HOURS.toMillis(1)
+
+//    val NUM_LANDMARKS = LANDMARK_DATA.size
+    const val GEOFENCE_RADIUS_IN_METERS = 500f
     const val EXTRA_GEOFENCE_INDEX = "GEOFENCE_INDEX"
 }
