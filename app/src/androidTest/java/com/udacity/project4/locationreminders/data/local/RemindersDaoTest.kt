@@ -25,6 +25,77 @@ import org.junit.Test
 @SmallTest
 class RemindersDaoTest {
 
-//    TODO: Add testing implementation to the RemindersDao.kt
+    @get:Rule
+    var instantExecutorRule = InstantTaskExecutorRule()
+
+    private lateinit var database: RemindersDatabase
+
+    @Before
+    fun initDb() {
+        database = Room.inMemoryDatabaseBuilder(
+                ApplicationProvider.getApplicationContext(),
+                RemindersDatabase::class.java
+        ).build()
+    }
+
+    @After
+    fun closeDb() = database.close()
+
+    @Test
+    fun insertReminderAndGetById() = runBlockingTest {
+        val reminder = ReminderDTO("Title1", "Description1", "Location", 0.0, 0.0)
+
+        database.reminderDao().saveReminder(reminder)
+
+        val result = database.reminderDao().getReminderById(reminder.id)
+
+        assertThat<ReminderDTO>(result as ReminderDTO, notNullValue())
+        assertThat(result.id, `is`(reminder.id))
+        assertThat(result.title, `is`(reminder.title))
+        assertThat(result.description, `is`(reminder.description))
+        assertThat(result.location, `is`(reminder.location))
+        assertThat(result.latitude, `is`(reminder.latitude))
+        assertThat(result.longitude, `is`(reminder.longitude))
+    }
+
+    @Test
+    fun getAllReminders() = runBlockingTest {
+
+        val reminders = mutableListOf<ReminderDTO>(
+                ReminderDTO("Title1", "Description1", "Location1", 0.0, 0.0),
+                ReminderDTO("Title1", "Description1", "Location1", 0.0, 0.0),
+                ReminderDTO("Title1", "Description1", "Location1", 0.0, 0.0),
+                ReminderDTO("Title1", "Description1", "Location1", 0.0, 0.0)
+        )
+
+        for (reminder in reminders) {
+            database.reminderDao().saveReminder(reminder)
+        }
+
+        val result = database.reminderDao().getReminders()
+
+        assertThat(result.size, `is`(reminders.size))
+    }
+
+    @Test
+    fun deleteReminders() = runBlockingTest {
+
+        val reminders = mutableListOf<ReminderDTO>(
+                ReminderDTO("Title1", "Description1", "Location1", 0.0, 0.0),
+                ReminderDTO("Title1", "Description1", "Location1", 0.0, 0.0),
+                ReminderDTO("Title1", "Description1", "Location1", 0.0, 0.0),
+                ReminderDTO("Title1", "Description1", "Location1", 0.0, 0.0)
+        )
+
+        for (reminder in reminders) {
+            database.reminderDao().saveReminder(reminder)
+        }
+
+        database.reminderDao().deleteAllReminders()
+
+        val result = database.reminderDao().getReminders()
+
+        assertThat(result.isEmpty(), `is`(true))
+    }
 
 }
