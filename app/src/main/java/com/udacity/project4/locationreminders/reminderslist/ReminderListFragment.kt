@@ -29,15 +29,13 @@ class ReminderListFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val navController = findNavController()
         authenticationViewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when (authenticationState) {
-                AuthenticationViewModel.AuthenticationState.UNAUTHENTICATED -> navController.navigate(R.id.authenticationActivity)
+                AuthenticationViewModel.AuthenticationState.UNAUTHENTICATED -> findNavController().navigate(R.id.authenticationActivity)
                 else -> {
                 }
             }
         })
-
 
         binding =
                 DataBindingUtil.inflate(
